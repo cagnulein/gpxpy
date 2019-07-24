@@ -6,11 +6,11 @@ import gpxpy.geo as mod_geo
 start = mod_geo.Location(44.519994, 10.856544)
 stop =  mod_geo.Location(44.507362, 10.854840)
 
-directory = "gpx"
+directory = "tmp"
 for filename in os.listdir(directory):
 	if filename.endswith(".gpx"):
 		file = os.path.join(directory, filename)
-		print(file)
+		#print(file)
 		gpx_file = open(file, 'r')
 		gpx = gpxpy.parse(gpx_file)
 
@@ -36,7 +36,8 @@ for filename in os.listdir(directory):
 						min = point.distance_2d(stop)
 						pointStop = point
 
-		if(pointStop.time_difference(pointStart) > 0):
-			print('Start:{0} End:{1}'.format(pointStart, pointStop))
-			print('Seconds:{0} Speed:{1:.1f} km/h'.format(pointStop.time_difference(pointStart), pointStart.speed_between(pointStop)*3.6))
+		if((pointStop.time_difference(pointStart) > 0) and (pointStart.time < pointStop.time)):
+			#print('Start:{0} End:{1}'.format(pointStart, pointStop))
+			#print('Seconds:{0} Speed:{1:.1f} km/h'.format(pointStop.time_difference(pointStart), pointStart.speed_between(pointStop)*3.6))
+			print('{0};{1:.1f}'.format(pointStart.time, pointStart.speed_between(pointStop)*3.6))
 
